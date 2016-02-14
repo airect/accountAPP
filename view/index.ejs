@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <title><%=title%></title>
+    <script src="../public/js/jquery-2.1.4.min.js"></script>
+    <script src="../public/js/bootstrap.min.js"></script>
+    <style>
+        .money-in {
+
+        }
+        .money-out {
+
+        }
+        /*footer*/
+        .footer {
+            margin-top: 20px;
+            padding: 16px 0;
+            border-top: 1px solid #e3e3e3;
+        }
+        .login-panel{
+            width:50%;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 3px 4px #EEE;
+        }
+        .login-panel .panel-heading{
+            _text-align: center;
+        }
+        .login-panel input{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">记账</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">登录</a></li>
+                <li><a href="#">注册</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!--主体-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel">
+                <div class="panel-body">
+                    <button type="button" class="btn btn-success btn-lg btn-block">收入</button>
+                    <button type="button" class="btn btn-danger btn-lg btn-block">支出</button>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">曲线图</div>
+                <div class="panel-body"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">账单列表</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">进账50</li>
+                        <li class="list-group-item">消费20</li>
+                        <li class="list-group-item">消费30</li>
+                    </ul>
+                </div>
+            </div>
+        </div
+    </div>
+</div>
+
+<!--login-->
+<div class="container">
+    <div class="panel panel-default login-panel">
+        <div class="panel-heading">&nbsp;</div>
+        <div class="panel-body">
+            <form action="" method="post" class="text-center" id="form-login">
+                <div class="form-group">
+                    <label for="">邮箱</label>
+                    <input type="text" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="">密码</label>
+                    <input type="password" class="form-control" name="passwd">
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" class="input-control">
+                    <label for="">记住密码</label>
+                    <a href="">注册</a>
+                </div>
+                <button class="btn btn-default btn-block" type="button" id="btn-login">登录</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<!--./login-->
+<!--logup-->
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">注册</div>
+        <div class="panel-body">
+            <form id="logup-form">
+                <div class="form-group">
+                    <label for="">邮箱：</label>
+                    <input type="text" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="">用户名：</label>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="">密码：</label>
+                    <input type="password" class="form-control" name="passwd">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" id="logup-btn">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--./logup-->
+<div class="container footer">
+    <p class="text-center">记账</p>
+</div>
+<script>
+    $('#btn-login').on('click', function() {
+        var info = $('#form-login').serialize();
+        $.ajax({
+            url: "/login",
+            type: 'post',
+            data: info,
+            success: function(response) {
+                if (response.login == 1) {
+                    location.href = '/user';
+                } else {
+                    alert('登录失败');
+                }
+
+                console.log(response);
+            },
+            error:function() {
+                console.log('failed');
+            }
+        });
+    });
+</script>
+<script>
+    (function() {
+        $("#logup-btn").on('click', function (){
+            var form_data =  $('#logup-form').serialize();
+            console.log(form_data);
+            $.ajax({
+                url: '/logup',
+                data: form_data,
+                type: 'post',
+                success: function(res) {
+                    if(res.error) {
+                        alert('注册失败');
+                    } else {
+                        alert('注册成功');
+                    }
+                },
+                error: function() {
+                    alert('注册失败');
+                }
+            });
+        });
+    })();
+</script>
+</body>
+</html>

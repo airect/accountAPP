@@ -6,39 +6,55 @@ var mongo = require('./db');
 function Check() {
 
 }
+module.exports = Check;
 /**
- * 获取单个账单或账单列表
+ * 获取账单列表
  * @param {Object} check
  */
-Check.prototype.getCheck = function(check, callback) {
+Check.getCheck = function(check, callback) {
     mongo.open(function(err, db) {
         if(err) return callback(err);
         db.collection('check' ,function(err, collection) {
             if(err) return callback(err);
             collection.find(check).toArray(function(err, items) {
                 if(err) return callback(err);
-                if(typeof(items) === 'array' && items.length == 1) {
-                    return callback(null, items[0]);
-                } else {
-                    return callback(null, items);
-                }
+                return callback(null, items);
             });
         });
     });
 }
-
+/**
+ * 获取一条账目
+ * @param check
+ * @param callback
+ */
+Check.getOneCheck = function(check , callback) {
+    mongo.open(function(err, db){
+        if(err) return callback(err);
+        db.collection('check', function(err, collection) {
+            if(err) {
+                mongo.close();
+                return callback(err);
+            };
+            collection.findOne(check, function(err, acheck){
+                mongo.close();
+                if(err) return callback(err);
+                return acheck;
+            });
+        });
+    });
+}
 /**
  * 增加一个账目
  * @param {Object} 一条账单
  */
-Check.prototype.addCheck = function(check, callback) {
-    //格式检测
-
+Check.addCheck = function(check, callback) {
     mongo.open(function(err, db) {
         if(err) return callback(err);
         db.collection('check', function(err, collection) {
-            if(err) return callback(err);
+            if(err) {mongo.close(); return callback(err);}
             collection.insert(check, {safe: true}, function(err, result) {
+                mongo.close();
                 if(err) return callback(err);
                 return callback(null, result);
             });
@@ -60,4 +76,31 @@ Check.prototype.delCheck = function(check, callback) {
             })
         });
     });
+}
+/**
+ * 检测数据
+ *
+ */
+Check.isComplete = function(check, callback) {
+    if(typeof check != 'object') {
+        return callback({error: 'not_object', msg: '数据校验错误：check is not a object'});
+    }
+    var compCheck = {
+        title: '标题未定义',
+        inorout: '消费或者支出？',
+        all_class: '类型未填写',
+        money_amount: '金额未填写',
+        desc: '备注说明'
+    };
+    var x;
+    for( x in compCheck){
+        if(check[x] == '') {
+            return callback({
+                error: x,
+                msg : compCheck[x]
+            });
+            break ;
+        }
+    }
+    return callback(null, true);
 }

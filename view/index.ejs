@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="check">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <title><%=title%></title>
     <script src="../public/js/jquery-2.1.4.min.js"></script>
     <script src="../public/js/bootstrap.min.js"></script>
+    <script src="../public/js/angular-1.0.1.min.js"></script>
+    <script src="../public/js/controller.js"></script>
+    <script>
+        //配置ejs
+
+    </script>
+    <script>
+        var _APP_URL_ = <%-app_url%>;
+    </script>
     <style>
         .money-in {
 
@@ -30,6 +39,11 @@
         }
         .login-panel input{
             text-align: center;
+        }
+        /*账单滚动*/
+        .check-wrapper {
+            height: 206px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -92,18 +106,47 @@
                 <div class="panel-body"></div>
             </div>
         </div>
+
         <div class="col-md-4">
+            <!--账单列表-->
             <div class="panel panel-default">
                 <div class="panel-heading">账单列表</div>
                 <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item">进账50</li>
-                        <li class="list-group-item">消费20</li>
-                        <li class="list-group-item">消费30</li>
+                    <ul class="list-group check-wrapper"  ng-controller="checkList">
+                        <li class="list-group-item" ng-repeat=" x in checks">{{ x.inorout + '&nbsp;' + x.money_amount + '元' | filter}}</li>
                     </ul>
                 </div>
             </div>
-        </div
+            <script>
+                (function() {
+                    var app = angular.module('check', []);
+                    app.controller('checkList', function($scope, $http) {
+                        $http.post('/checklist').success(function(response) {
+                            var x;
+                            for(x in response) {
+                                console.log(x);
+                                if(response[x].money_amount == '') {
+                                    console.log(response.splice(x, 1));
+                                    //console.log(response[x]);
+                                }
+                            }
+                            //console.log(response);
+//                            for(x in response) {
+//                                if(response[x]['inorout'] == '消费') {
+//                                    response[x]['inorout'] = '消费';
+//                                } else {
+//                                    response[x]['inorout'] = '收入';
+//                                }
+//                            }
+
+                           $scope.checks = response;
+                        });
+                    });
+                })();
+
+            </script>
+            <!--账单列表-->
+        </div>
     </div>
 </div>
 
@@ -133,6 +176,7 @@
 
 </div>
 <!--./login-->
+
 <!--logup-->
 <div class="container">
     <div class="panel panel-default">
@@ -159,9 +203,56 @@
     </div>
 </div>
 <!--./logup-->
+
+<!--记下一笔帐-->
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">记下一笔账</div>
+        <div class="panel-body">
+            <form action="" class="form" id="addcheck">
+                <div class="form-group"><label for="">标题：</label><input type="text" name="title" class="form-control"></div>
+                <div class="form-group"><label for="">消费or收入：</label><input type="text" name="inorout" class="form-control"></div>
+                <div class="form-group"><label for="">分类：</label><input type="text" name="all_class" class="form-control"></div>
+                <div class="form-group"><label for="">金额：</label><input type="text" name="money_amount" class="form-control"></div>
+                <div class="form-group"><label for="">备注说明：</label><input type="text" name="desc" class="form-control"></div>
+                <div class="form-group">
+                    <button class="btn btn-default add" type="button">记到账上去</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $("#addcheck .add").on('click', function() {
+        var check = $('#addcheck').serialize();
+        $.ajax({
+            url: '/addcheck',
+            data: check,
+            type: 'post',
+            dataType: 'json',
+            success: function(res) {
+                if(res.error) {
+                    alert(res.msg);
+                }
+                if(res.success) {
+                    alert('你已经成功的记上一笔账！');
+                    location.href = '/';
+                }
+            },
+            error: function() {
+                alert('加载失败');
+            }
+
+        });
+    });
+</script>
+<!---记下一笔账->
+
+<!--footer-->
 <div class="container footer">
     <p class="text-center">记账</p>
 </div>
+<!--./footer-->
 <script>
     $('#btn-login').on('click', function() {
         var info = $('#form-login').serialize();

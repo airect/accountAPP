@@ -8,17 +8,27 @@ var Check   = require('../model/check.js');
 var User    = require('../model/user.js');
 var crypto = require('crypto');
 var md5     = crypto.createHash('md5');
+//var flash   = require('connect-flash');
 
+
+//
+router.get(function(req, res) {
+
+});
 //首页
 router.get('/', function(req, res) {
 	res.render('index' ,{
-		title: '记账app'
+		title: '记账app',
+        app_url: req.baseUrl
 	});
 });
 
 //账单列表api
-router.get('/checklist', function(req, res) {
-
+router.post('/checklist', function(req, res) {
+    Check.getCheck({}, function(err, checks) {
+        if(err) return res.json({error: 1, msg: '查询错误或没有数据'});
+        res.json(checks);
+    });
 });
 
 //关于我们
@@ -40,6 +50,24 @@ router.get('/', function(req, res) {
 
 
 //添加收入支出api
+router.post('/addcheck', function(req, res) {
+    //检测数据
+    var acheck = req.body;
+	console.log(acheck);
+    var f = Check.isComplete(acheck, function(err, isComp) {
+        if(err) return res.json({error: 1, msg: err.msg});
+
+    });
+    if(f) return ;
+	Check.addCheck(acheck, function(err, result) {
+		if(err) {
+			return res.json({error:1, msg: '添加失败'});
+		}
+		result.success = 1;
+		res.json(result);
+	});
+
+});
 
 //登陆
 router.post('/login', function(req, res) {

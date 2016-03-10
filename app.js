@@ -53,11 +53,11 @@ var server = app.listen(3000, function() {
 //    next(err);
 //});
 //error handler
-app.use(function(err, req, res, next) {
-    //err.status(err.status || 500);
-    //
-    if(err) {
-        console.log('error');
-    }
-
-});
+//app.use(function(err, req, res, next) {
+//    //err.status(err.status || 500);
+//    //
+//    if(err) {
+//        console.log('error');
+//    }
+//
+//});

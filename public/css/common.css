@@ -1,0 +1,15 @@
+/*footer*/
+.footer {
+    margin-top: 20px;
+    padding: 16px 0;
+    border-top: 1px solid #e3e3e3;
+}
+.login-panel{
+    box-shadow: 3px 4px #EEE;
+}
+.login-panel .panel-heading{
+    text-align: center;
+}
+.login-panel input{
+    text-align: center;
+}

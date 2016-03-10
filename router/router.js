@@ -72,14 +72,10 @@ router.post('/addcheck', function(req, res) {
 //登陆
 router.get('/login', function(req, res) {
     res.render('home/login', {
-
+        title: '登录'
     });
 });
-//router.get('/login', function(req, res) {
-//	//res.render('home/login', {
-//	//	title: '用户登录'
-//	//});
-//});
+
 router.post('/login', function(req, res) {
 	User.getUser({email:req.body.email, passwd: req.body.passwd}, function(err, data) {
 		if(err) {

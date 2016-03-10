@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh_CN" ng-app="account">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <% include ../base/static.ejs %>
+</head>
+<body>
+<% include ../base/header.ejs %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel">
+                <div class="panel-body">
+                    <button type="button" class="btn btn-success btn-lg btn-block">收入</button>
+                    <button type="button" class="btn btn-danger btn-lg btn-block">支出</button>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">曲线图</div>
+                <div class="panel-body"></div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!--账单列表-->
+            <div class="panel panel-default">
+                <div class="panel-heading">账单列表</div>
+                <div class="panel-body">
+                    <ul class="list-group check-wrapper"  ng-controller="checkList">
+                        <li class="list-group-item" ng-repeat=" x in checks">{{ x.title  + '&nbsp;'
+                            + x.inorout + '&nbsp;' + x.money_amount + '&nbsp;元'}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script>
+                //slider
+                $(function() {
+                    $('.check-wrapper');
+                });
+            </script>
+            <!--账单列表-->
+        </div>
+    </div>
+</div>
+
+<% include ../base/footer.ejs %>
+</body>
+</html>

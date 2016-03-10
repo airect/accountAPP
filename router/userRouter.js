@@ -8,7 +8,7 @@ module.exports = router;
 router.use(function(req, res, next) {
     //判断是否已经登录
     //var isLogin = res.session;
-    var isLogin = false;
+    var isLogin = true;
     if(!isLogin) {
         return res.json({
             error: 'notlogin',
@@ -20,7 +20,9 @@ router.use(function(req, res, next) {
 });
 //用户主页
 router.get('/', function(req, res) {
-    res.send('Yonghu zhongxin');
+    res.render('user/index', {
+        title: '用户中心'
+    });
 });
 //
 

@@ -14,24 +14,6 @@
         .money-out {
 
         }
-        /*footer*/
-        .footer {
-            margin-top: 20px;
-            padding: 16px 0;
-            border-top: 1px solid #e3e3e3;
-        }
-        .login-panel{
-            width:50%;
-            max-width: 400px;
-            margin: 0 auto;
-            box-shadow: 3px 4px #EEE;
-        }
-        .login-panel .panel-heading{
-            _text-align: center;
-        }
-        .login-panel input{
-            text-align: center;
-        }
         /*账单滚动*/
         .check-wrapper {
             height: 206px;
@@ -42,43 +24,7 @@
 <body>
 <% include ../base/header.ejs %>
 <!--主体-->
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="panel">
-                <div class="panel-body">
-                    <button type="button" class="btn btn-success btn-lg btn-block">收入</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block">支出</button>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">曲线图</div>
-                <div class="panel-body"></div>
-            </div>
-        </div>
 
-        <div class="col-md-4">
-            <!--账单列表-->
-            <div class="panel panel-default">
-                <div class="panel-heading">账单列表</div>
-                <div class="panel-body">
-                    <ul class="list-group check-wrapper"  ng-controller="checkList">
-                        <li class="list-group-item" ng-repeat=" x in checks">{{ x.title  + '&nbsp;'
-                            + x.inorout + '&nbsp;' + x.money_amount + '&nbsp;元'}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <script>
-                //slider
-                $(function() {
-                    $('.check-wrapper');
-                });
-            </script>
-            <!--账单列表-->
-        </div>
-    </div>
-</div>
 <!--记下一笔帐-->
 <div class="container">
     <div class="panel panel-default">

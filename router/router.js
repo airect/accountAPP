@@ -12,12 +12,12 @@ var md5     = crypto.createHash('md5');
 
 
 //
-router.get(function(req, res) {
+//router.get(function(req, res) {
 
-});
+//});
 //首页
 router.get('/', function(req, res) {
-	res.render('index' ,{
+	res.render('home/index' ,{
 		title: '记账app',
         app_url: req.baseUrl
 	});
@@ -70,6 +70,16 @@ router.post('/addcheck', function(req, res) {
 });
 
 //登陆
+router.get('/login', function(req, res) {
+    res.render('home/login', {
+
+    });
+});
+//router.get('/login', function(req, res) {
+//	//res.render('home/login', {
+//	//	title: '用户登录'
+//	//});
+//});
 router.post('/login', function(req, res) {
 	User.getUser({email:req.body.email, passwd: req.body.passwd}, function(err, data) {
 		if(err) {
@@ -88,7 +98,12 @@ router.post('/login', function(req, res) {
 	});
 });
 //注册
-router.post('/logup', function(req, res) {
+router.get('/reg', function(req, res) {
+    res.render('home/reg', {
+        title: '用户注册'
+    });
+});
+router.post('/reg', function(req, res) {
 	if(req.body.email == '' || req.body.username == '' || req.body.passwd == '') {
 		res.json({error: "信息不完整"});
 		return ;
@@ -107,8 +122,4 @@ router.post('/logup', function(req, res) {
 });
 //找回密码
 
-//用户中心
-router.get('/user', function(req, res) {
-	res.json({s:'s'});
-});
 module.exports = router;

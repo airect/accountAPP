@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="account">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <% include ../base/static.ejs %>
+</head>
+<body>
+<% include ../base/header.ejs %>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">注册</div>
+        <div class="panel-body">
+            <form id="reg-form">
+                <div class="form-group">
+                    <label for="">邮箱：</label>
+                    <input type="text" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="">用户名：</label>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="">密码：</label>
+                    <input type="password" class="form-control" name="passwd">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" id="reg-btn">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    (function() {
+        $("#reg-btn").on('click', function (){
+            var form_data =  $('#reg-form').serialize();
+            console.log(form_data);
+            $.ajax({
+                url: '/reg',
+                data: form_data,
+                type: 'post',
+                success: function(res) {
+                    if(res.error) {
+                        alert('注册失败');
+                    } else {
+                        alert('注册成功');
+                    }
+                },
+                error: function() {
+                    alert('注册失败');
+                }
+            });
+        });
+    })();
+</script>
+<% include ../base/footer.ejs %>
+</body>
+</html>

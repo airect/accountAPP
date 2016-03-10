@@ -3,7 +3,10 @@
  */
 var mongo = require('./db');
 
-function User() {
+function User(user) {
+    this.username = user.username;
+    this.age      = user.age;
+    this.passwd   = user.passwd;
 
 }
 
@@ -19,15 +22,10 @@ User.getUser = function(user, callback) {
                 mongo.close();
                 return callback(err);
             }
-            collection.find(user).toArray(function (err, items) {
+            collection.findOne(user, function(err, item) {
                 mongo.close();
                 if(err) return callback(err);
-                if(items.length == 1) {
-                    return callback(null, items[0]);
-                } else {
-                    return callback(null, items);
-                }
-
+                return callback(null, item);
             });
         });
     });
@@ -38,7 +36,7 @@ User.getUser = function(user, callback) {
  * @param {Object} user
  */
 
-User.addUser = function(user, callback) {
+User.prototype.add = function(user, callback) {
     mongo.open(function(err, db) {
         if(err) {
             mongo.close();
@@ -59,6 +57,12 @@ User.addUser = function(user, callback) {
     });
 }
 
+/**
+ * 修改一个用户
+ */
+User.prototype.updateInfo = function(callback) {
+
+}
 /**
  * 删除一个用户
  * @param {Object} user：包含用户一个或多个特征信息的对象

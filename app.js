@@ -7,6 +7,7 @@ var app = express();
 var path = require('path');
 var setting = require('./setting.js');
 var router = require('./router/router.js');
+var userRouter = require('./router/userRouter.js');
 var bodyParser = require('body-parser');
 var session  = require('express-session');
 //var MongoStore = require('connect-mongo')(session);
@@ -39,6 +40,7 @@ app.use('/public', express.static(__dirname + '/public'));
 
 //set router
 app.use('/', router);
+app.use('/user', userRouter);
 var server = app.listen(3000, function() {
     var host = server.address().address;
     var port = server.address().port;

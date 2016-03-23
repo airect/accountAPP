@@ -10,8 +10,9 @@ var router = require('./router/router.js');
 var userRouter = require('./router/userRouter.js');
 var bodyParser = require('body-parser');
 var session  = require('express-session');
-//var MongoStore = require('connect-mongo')(session);
+var MongoStore = require('connect-mongo')(session);
 var cookieParse = require('cookie-parser');
+var connect = require('connect');
 
 app.use(cookieParse());
 
@@ -19,14 +20,15 @@ app.use(session({
     secret: setting.cookieSecret,
     key: 'account',
     cookie: {maxAge: 3600*24*30*1000},
-    //store: new MongoStore({
-    //    db: setting.db.dbname,
-    //    host: setting.db.host
-    //}),
+    store: new MongoStore({
+        db: setting.db.dbname,
+        host: setting.db.host
+    }),
     resave: true,
     saveUninitialized: true
 }));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 //set view engine
 app.set('views', path.join(__dirname, 'view'));
@@ -39,6 +41,12 @@ app.set('view options', {
 app.use('/public', express.static(__dirname + '/public'));
 
 //set router
+app.use('/',function(req, res, next) {
+    if(typeof req.session.user != 'undefined') {
+        res.locals.session = req.session;
+    }
+    next();
+});
 app.use('/', router);
 app.use('/user', userRouter);
 var server = app.listen(3000, function() {

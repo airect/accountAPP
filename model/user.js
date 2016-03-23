@@ -5,7 +5,7 @@ var mongo = require('./db');
 
 function User(user) {
     this.username = user.username;
-    this.age      = user.age;
+    this.email      = user.email;
     this.passwd   = user.passwd;
 
 }
@@ -14,7 +14,7 @@ function User(user) {
  * 获取一个用户的信息
  * @param {String} user 含用户信息的对象
  */
-User.getUser = function(user, callback) {
+User.getOneUser = function(user, callback) {
     mongo.open(function(err, db) {
         if(err) return callback(err);
         db.collection('user',  function(err, collection) {
@@ -34,9 +34,15 @@ User.getUser = function(user, callback) {
 /**
  * 添加一个用户
  * @param {Object} user
+ * @callback
  */
 
-User.prototype.add = function(user, callback) {
+User.prototype.addOneUser = function(callback) {
+    var user = {
+        username: this.username,
+        email: this.email,
+        passwd: this.passwd
+    };
     mongo.open(function(err, db) {
         if(err) {
             mongo.close();
@@ -48,10 +54,9 @@ User.prototype.add = function(user, callback) {
                 return callback(err);
             }
             collection.insert(user, {safe: true}, function(err, docs) {
-                console.log(user);
-                mongo.close();
+                console.log(err);
                 if(err) return callback(err);
-                return callback(null, docs);
+                return callback(null, (docs.ops)[0]);
             });
         })
     });
@@ -60,7 +65,7 @@ User.prototype.add = function(user, callback) {
 /**
  * 修改一个用户
  */
-User.prototype.updateInfo = function(callback) {
+User.prototype.updateOneUser = function(callback) {
 
 }
 /**

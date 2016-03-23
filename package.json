@@ -11,6 +11,6 @@
   "dependencies": {
     "ejs": "^2.3.4",
     "express": "^4.13.3",
-    "mongo-connect": "0.0.6"
+    "connect-mongo": "0.8.0"
   }
 }

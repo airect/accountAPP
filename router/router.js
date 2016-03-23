@@ -77,20 +77,29 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-	User.getUser({email:req.body.email, passwd: req.body.passwd}, function(err, data) {
+	User.getOneUser({username:req.body.username, passwd: req.body.passwd}, function(err, user) {
 		if(err) {
-			res.json({login: '0'});
+			res.json({
+                error: '0',
+                msg: '登录失败'
+            });
 			console.log(err);
 			return ;
 		}
-		if(data.length > 1) {
-			res.json({login: '0'});
-			console.log(data.length);
-			return ;
-		}
+		if(user == null) {
+            return res.json({
+                error: 1,
+                msg:  '没有此用户或密码错误'
+            });
+		} else {
+            req.session.user = {
+                username: user.username,
+                email   : user.email
+            };
+            return res.json({success: 1});
+        }
+        console.log(user);
 
-		data.login = '1';
-		res.json(data);
 	});
 });
 //注册
@@ -104,17 +113,48 @@ router.post('/reg', function(req, res) {
 		res.json({error: "信息不完整"});
 		return ;
 	}
-	User.addUser({email: req.body.email,
-				  username: req.body.username,
-				  passwd: req.body.passwd},
-		function(err, result) {
-			if(err) {
-				err.error = '添加用户失败';
-				res.json({error: err});
-				return ;
-			}
-			res.json(result);
-	})
+    var user = new User({
+        username: req.body.username,
+        email: req.body.email,
+        passwd : req.body.passwd
+    });
+    //判断一个用户是否存在
+    //var isHad = User.getOneUser(user, function(err, item) {
+    //    return item;
+    //});
+    //if(isHad) {
+    //    res.json({
+    //        error: 1,
+    //        msg: "用户已经存在"
+    //    });
+    //}
+	user.addOneUser(function(err, user) {
+		if(err) {
+			res.json({
+				error: 1,
+				msg  : '添加用户失败'
+			});
+			return ;
+		}
+        user.success = 1;
+		res.json(user);
+	});
+});
+/*
+ * 用户注销
+ */
+router.get('/logout', function(req, res) {
+    console.log(res.locals.session);
+    if(req.session.user) {
+        req.session.user = null;
+        res.locals.session.user = null;
+        res.send("<script>location.href='/'</script>");
+        //res.redirect(200, '/');
+    } else {
+        res.locals.session.user = null;
+        res.redirect('/');
+    }
+
 });
 //找回密码
 

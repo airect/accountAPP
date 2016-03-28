@@ -13,7 +13,8 @@ var session  = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var cookieParse = require('cookie-parser');
 var connect = require('connect');
-
+var _lang    =  require('./language/zh_cn.js');
+app.locals._lang = _lang;
 app.use(cookieParse());
 
 app.use(session({

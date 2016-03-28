@@ -55,7 +55,7 @@
                 type: 'post',
                 success: function(res) {
                     if(res.error) {
-                        alert(error.msg);
+                        alert(res.msg);
                     } else if(res.success) {
                         alert('注册成功');
 

@@ -23,8 +23,8 @@ User.getOneUser = function(user, callback) {
                 return callback(err);
             }
             collection.findOne(user, function(err, item) {
-                mongo.close();
                 if(err) return callback(err);
+                //mongo.close();
                 return callback(null, item);
             });
         });

@@ -13,8 +13,8 @@
         <div class="col-md-8">
             <div class="panel">
                 <div class="panel-body">
-                    <button type="button" class="btn btn-success btn-lg btn-block">收入</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block">支出</button>
+                    <button type="button" class="btn btn-success btn-lg btn-block account-in">收入</button>
+                    <button type="button" class="btn btn-danger btn-lg btn-block account-out">支出</button>
                 </div>
             </div>
             <div class="panel panel-default">
@@ -45,7 +45,30 @@
         </div>
     </div>
 </div>
+<script>
+    //收入
+   $('.account-in').on('click', function() {
+        layer.open({
+            title: '收入',
+            type: 1,
+            skin: 'layui-layer-rim',
+            area: ['420px', '240px'],
+            content: '1'
 
+        })
+   });
+   //支出
+   $('.account-out').on('click', function() {
+       layer.open({
+           title: '支出',
+           type: 1,
+           skin: 'layui-layer-rim',
+           area: ['420px', '240px'],
+           content: '1'
+
+       })
+   });
+</script>
 <% include ../base/footer.ejs %>
 </body>
 </html>

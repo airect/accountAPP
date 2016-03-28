@@ -110,7 +110,7 @@ router.get('/reg', function(req, res) {
 });
 router.post('/reg', function(req, res) {
 	if(req.body.email == '' || req.body.username == '' || req.body.passwd == '') {
-		res.json({error: "信息不完整"});
+		res.json({error:2, msg: "信息不完整"});
 		return ;
 	}
     var user = new User({
@@ -118,16 +118,18 @@ router.post('/reg', function(req, res) {
         email: req.body.email,
         passwd : req.body.passwd
     });
+    console.log(user);
     //判断一个用户是否存在
-    //var isHad = User.getOneUser(user, function(err, item) {
-    //    return item;
-    //});
-    //if(isHad) {
-    //    res.json({
-    //        error: 1,
-    //        msg: "用户已经存在"
-    //    });
-    //}
+    var isHad = User.getOneUser(user, function(err, item) {
+        console.log(item);
+        return item;
+    });
+    if(isHad) {
+        return res.json({
+            error: 1,
+            msg: "用户已经存在"
+        });
+    }
 	user.addOneUser(function(err, user) {
 		if(err) {
 			res.json({

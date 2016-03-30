@@ -27,45 +27,10 @@
 
 <!--记下一笔帐-->
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">记下一笔账</div>
-        <div class="panel-body">
-            <form action="" class="form" id="addcheck">
-                <div class="form-group"><label for="">标题：</label><input type="text" name="title" class="form-control"></div>
-                <div class="form-group"><label for="">消费or收入：</label><input type="text" name="inorout" class="form-control"></div>
-                <div class="form-group"><label for="">分类：</label><input type="text" name="all_class" class="form-control"></div>
-                <div class="form-group"><label for="">金额：</label><input type="text" name="money_amount" class="form-control"></div>
-                <div class="form-group"><label for="">备注说明：</label><input type="text" name="desc" class="form-control"></div>
-                <div class="form-group">
-                    <button class="btn btn-default add" type="button">记到账上去</button>
-                </div>
-            </form>
-        </div>
-    </div>
+
 </div>
 <script>
-    $("#addcheck .add").on('click', function() {
-        var check = $('#addcheck').serialize();
-        $.ajax({
-            url: '/addcheck',
-            data: check,
-            type: 'post',
-            dataType: 'json',
-            success: function(res) {
-                if(res.error) {
-                    alert(res.msg);
-                }
-                if(res.success) {
-                    alert('你已经成功的记上一笔账！');
-                    location.href = '/';
-                }
-            },
-            error: function() {
-                alert('加载失败');
-            }
 
-        });
-    });
 </script>
 <!---记下一笔账-->
 <!--footer-->

@@ -10,7 +10,7 @@
             var i;
             for(i=0; i<response.length;) {
                 if(response[i].money_amount == '') {
-                    response.splice(i,1);
+                    response.splice(i, 1);
                 } else {
                     i++;
                 }

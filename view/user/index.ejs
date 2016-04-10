@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title><%= title %></title>
     <% include ../base/static.ejs %>
+    <style>
+        .axis path,
+        .axis line{
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+    </style>
 </head>
 <body>
 <% include ../base/header.ejs %>
@@ -18,15 +31,19 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">曲线图</div>
-                <div class="panel-body"></div>
+                <div class="panel-heading"><i class="fa fa-bar-chart"></i>&nbsp;账目趋势</div>
+                <div class="panel-body">
+                    <div class="check-trend">
+
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="col-md-4">
             <!--账单列表-->
             <div class="panel panel-default">
-                <div class="panel-heading">账单列表</div>
+                <div class="panel-heading"><i class="fa fa-list-alt"></i>&nbsp;账单列表</div>
                 <div class="panel-body">
                     <ul class="list-group check-wrapper"  ng-controller="checkList">
                         <li class="list-group-item" ng-repeat=" x in checks">{{ x.title  + '&nbsp;'
@@ -63,9 +80,7 @@
                 </div>
                 <div class="form-group"><label for="">金额：</label><input type="text" name="money_amount" class="form-control"></div>
                 <div class="form-group"><label for="">备注说明：</label>
-                    <textarea name="desc" id="" cols="30" rows="4" class="form-control">
-
-                    </textarea>
+                    <textarea name="desc" id="" cols="30" rows="4" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-default add" type="button">记到账上去</button>

@@ -20,7 +20,7 @@ app.use(cookieParse());
 app.use(session({
     secret: setting.cookieSecret,
     key: 'account',
-    cookie: {maxAge: 3600*24*30*1000},
+    cookie: {maxAge: 3600*24},
     store: new MongoStore({
         db: setting.db.dbname,
         host: setting.db.host

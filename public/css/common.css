@@ -13,3 +13,11 @@
 .login-panel input{
     text-align: center;
 }
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius:14px;
+    margin-right: 12px;
+}

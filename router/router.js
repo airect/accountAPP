@@ -17,7 +17,7 @@ var md5     = crypto.createHash('md5');
 //});
 //首页
 router.get('/', function(req, res) {
-	res.render('home/index' ,{
+	res.render('home/index' , {
 		title: '记账app',
         app_url: req.baseUrl
 	});

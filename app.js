@@ -42,10 +42,8 @@ app.set('view options', {
 app.use('/public', express.static(__dirname + '/public'));
 
 //set router
-app.use('/',function(req, res, next) {
-    if(typeof req.session.user != 'undefined') {
+app.use('/', function(req, res, next) {
         res.locals.session = req.session;
-    }
     next();
 });
 app.use('/', router);

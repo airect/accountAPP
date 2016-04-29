@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh_CN" ng-app="account">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <% include ../base/static.ejs %>
+    <style>
+        .axis path,
+        .axis line{
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+<% include ../base/header.ejs %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel">
+                <div class="panel-body">
+                    <button type="button" class="btn btn-success btn-lg btn-block account-in">收入</button>
+                    <button type="button" class="btn btn-danger btn-lg btn-block account-out">支出</button>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-bar-chart"></i>&nbsp;账目趋势</div>
+                <div class="panel-body">
+                    <div class="check-trend">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!--账单列表-->
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-list-alt"></i>&nbsp;账单列表</div>
+                <div class="panel-body">
+                    <ul class="list-group check-wrapper"  ng-controller="checkList">
+                        <li class="list-group-item" ng-repeat=" x in checks">{{ x.title  + '&nbsp;'
+                            + x.inorout + '&nbsp;' + x.money_amount + '&nbsp;元'}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script>
+                //slider
+                $(function() {
+                    $('.check-wrapper');
+                });
+            </script>
+            <!--账单列表-->
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="make-a-record">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form action="" class="form" id="addcheck">
+                <div class="form-group"><label for="">标题：</label><input type="text" name="title" class="form-control"></div>
+                <input hidden name="inorout" value="__type__">
+                <div class="form-group"><label for="">分类：</label>
+                    <select name="all_class" id="" class="form-control">
+                        <option value="">--空--</option>
+                        <option value="1">零食</option>
+                        <option value="2">电子</option>
+                        <option value="3">吃饭</option>
+                        <option value="4"></option>
+                    </select>
+                </div>
+                <div class="form-group"><label for="">金额：</label><input type="text" name="money_amount" class="form-control"></div>
+                <div class="form-group"><label for="">备注说明：</label>
+                    <textarea name="desc" id="" cols="30" rows="4" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default add" type="button">记到账上去</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</script>
+<script>
+    //收入
+   $('.account-in, .account-out').on('click', function() {
+       var _this = $(this);
+        var current = (function() {
+                    var s = {'title': '消费', 'type': '消费'};
+                    if ( _this.hasClass('account-in') ) {
+                        s['type']  = '收入';
+                        s['title'] = '收入'
+                    }
+                    return s;
+        })();
+        layer.open({
+            title: current.title,
+            type: 1,
+            skin: 'layui-layer-rim',
+            area: ['420px', '540px'],
+            content: $('#make-a-record').html().replace(/__type__/g, current.type),
+            success: function() {
+                $("#addcheck .add").on('click', function() {
+                    var check = $('#addcheck').serialize();
+                    $.ajax({
+                        url: '/addcheck',
+                        data: check,
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.error) {
+                                alert(res.msg);
+                            }
+                            if(res.success) {
+                                alert('你已经成功的记上一笔账！');
+                                location.reload();
+                            }
+                        },
+                        error: function() {
+                            alert('加载失败');
+                        }
+
+                    });
+                });
+            }
+
+        })
+   });
+</script>
+<% include ../base/footer.ejs %>
+</body>
+</html>

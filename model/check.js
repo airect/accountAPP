@@ -88,9 +88,9 @@ Check.isComplete = function(check, callback) {
     var compCheck = {
         title: '标题未定义',
         inorout: '消费或者支出？',
-        all_class: '类型未填写',
-        money_amount: '金额未填写',
-        desc: '备注说明'
+        type: '类型未填写',
+        money: '金额未填写'
+        //desc: '描述未填写' //这个地方可以不填'
     };
     var x;
     for( x in compCheck){

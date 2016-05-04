@@ -7,7 +7,7 @@ var app = express();
 var path = require('path');
 var setting = require('./setting.js');
 var router = require('./router/router.js');
-var userRouter = require('./router/userRouter.js');
+var userRouter = require('./router/user_router.js');
 var bodyParser = require('body-parser');
 var session  = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -20,7 +20,7 @@ app.use(cookieParse());
 app.use(session({
     secret: setting.cookieSecret,
     key: 'account',
-    cookie: {maxAge: 3600*24},
+    cookie: {maxAge: 3600 * 24 * 1000},
     store: new MongoStore({
         db: setting.db.dbname,
         host: setting.db.host
@@ -48,6 +48,7 @@ app.use('/', function(req, res, next) {
 });
 app.use('/', router);
 app.use('/user', userRouter);
+app.use('/setting', require('./router/user_setting.js'));
 var server = app.listen(3000, function() {
     var host = server.address().address;
     var port = server.address().port;

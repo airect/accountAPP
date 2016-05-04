@@ -1,6 +1,6 @@
 /**
- * Created by Administrator on 2016/3/9.
  * angular controller
+ * @author sunxiaojiao
  */
 (function() {
     var app = angular.module('account', []);
@@ -26,7 +26,9 @@
             $scope.checks = response;
         });
     });
-    //
-    app.controller();
+    //user setting -> avatar
+    app.controller('', function($scope) {
+
+    });
 
 })();

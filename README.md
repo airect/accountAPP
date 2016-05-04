@@ -7,7 +7,7 @@
 ##
 MEAN=>MongoDB Express Angular NodeJS
 
-D3.js
+D3.js Bootstrap
  
 # 业务功能
 ##

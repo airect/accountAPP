@@ -47,7 +47,7 @@
                 <div class="panel-body">
                     <ul class="list-group check-wrapper"  ng-controller="checkList">
                         <li class="list-group-item" ng-repeat=" x in checks">{{ x.title  + '&nbsp;'
-                            + x.inorout + '&nbsp;' + x.money_amount + '&nbsp;元'}}
+                            + x.inorout + '&nbsp;' + x.money + '&nbsp;元'}}
                         </li>
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
                 <div class="form-group"><label for="">标题：</label><input type="text" name="title" class="form-control"></div>
                 <input hidden name="inorout" value="__type__">
                 <div class="form-group"><label for="">分类：</label>
-                    <select name="all_class" id="" class="form-control">
+                    <select name="type" id="" class="form-control">
                         <option value="">--空--</option>
                         <option value="1">零食</option>
                         <option value="2">电子</option>
@@ -78,7 +78,7 @@
                         <option value="4"></option>
                     </select>
                 </div>
-                <div class="form-group"><label for="">金额：</label><input type="text" name="money_amount" class="form-control"></div>
+                <div class="form-group"><label for="">金额：</label><input type="text" name="money" class="form-control"></div>
                 <div class="form-group"><label for="">备注说明：</label>
                     <textarea name="desc" id="" cols="30" rows="4" class="form-control"></textarea>
                 </div>
@@ -91,7 +91,29 @@
 
 </script>
 <script>
-    //收入
+    //绑定事件 添加一个check
+    $('body').on('click', "#addcheck .add", function() {
+        var check = $('#addcheck').serialize();
+        $.ajax({
+            url: '/addcheck',
+            data: check,
+            type: 'post',
+            dataType: 'json',
+            success: function(res) {
+                if(res.error) {
+                    alert(res.msg);
+                }
+                if(res.success) {
+                    alert('你已经成功的记上一笔账！');
+                    location.reload();
+                }
+            },
+            error: function() {
+                alert('加载失败');
+            }
+
+        });
+    });
    $('.account-in, .account-out').on('click', function() {
        var _this = $(this);
         var current = (function() {
@@ -108,31 +130,7 @@
             skin: 'layui-layer-rim',
             area: ['420px', '540px'],
             content: $('#make-a-record').html().replace(/__type__/g, current.type),
-            success: function() {
-                $("#addcheck .add").on('click', function() {
-                    var check = $('#addcheck').serialize();
-                    $.ajax({
-                        url: '/addcheck',
-                        data: check,
-                        type: 'post',
-                        dataType: 'json',
-                        success: function(res) {
-                            if(res.error) {
-                                alert(res.msg);
-                            }
-                            if(res.success) {
-                                alert('你已经成功的记上一笔账！');
-                                location.reload();
-                            }
-                        },
-                        error: function() {
-                            alert('加载失败');
-                        }
-
-                    });
-                });
-            }
-
+            success: function() {}
         })
    });
 </script>

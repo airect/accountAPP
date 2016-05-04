@@ -4,6 +4,7 @@
 var mongo = require('./db');
 
 function User(user) {
+    this._id = user.id;
     this.username = user.username;
     this.email      = user.email;
     this.passwd   = user.passwd;
@@ -22,7 +23,7 @@ User.getOneUser = function(user, callback) {
                 mongo.close();
                 return callback(err);
             }
-            collection.findOne(user, function(err, item) {
+            collection.findOne(user,{"check": 0}, function(err, item) {
                 if(err) return callback(err);
                 //mongo.close();
                 return callback(null, item);

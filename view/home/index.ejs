@@ -1,38 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="account">
+<html lang="en" ng-app="accountIndex">
 <head>
     <meta charset="UTF-8">
     <title><%=title%></title>
     <% include ../base/static.ejs %>
+    <script src="/public/angular/appIndex/app_index.js"></script>
     <script>
         var _APP_URL_ =1 <%-app_url%>;
     </script>
     <style>
-        .money-in {
-
-        }
-        .money-out {
-
-        }
-        /*账单滚动*/
-        .check-wrapper {
-            height: 206px;
-            overflow: hidden;
-        }
     </style>
 </head>
 <body>
 <% include ../base/header.ejs %>
 <!--主体-->
-
-<!--记下一笔帐-->
-<div class="container">
+<div class="container" ui-view>
 
 </div>
-<script>
-
-</script>
-<!---记下一笔账-->
 <!--footer-->
 <% include ../base/footer.ejs %>
 <!--./footer-->

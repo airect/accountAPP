@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><i class="fa fa-cloud"></i>&nbsp;记账</a>
+            <a class="navbar-brand" ui-sref="index"><i class="fa fa-cloud"></i>&nbsp;记账</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,12 +19,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <% if( session.user ) { %>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/public/image/avatar.jpg" class="user-avatar" width="20" height="20"><%= session .user.username%> <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/public/image/avatar.jpg" class="user-avatar" width="20" height="20"><%= session .user.username%> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/user"><i class="fa fa-tachometer"></i>&nbsp;用户中心</a></li>
-                        <li><a href="#"></a></li>
+                        <li><a ui-sref="user"><i class="fa fa-tachometer"></i>&nbsp;用户中心</a></li>
+                        <li><a></a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="/user/setting"><i class="fa fa-tachometer"></i>&nbsp;我的设置</a></li>
+                        <li><a ui-sref="user.setting"><i class="fa fa-tachometer"></i>&nbsp;我的设置</a></li>
                         <li><a href="#"></a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#"><i class="fa fa-bar-chart"></i>&nbsp;近期记录</a></li>

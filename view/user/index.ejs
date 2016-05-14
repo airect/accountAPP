@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="accountUser">
+<html ng-app="account">
 <head>
     <meta charset="UTF-8">
     <title><%= title %></title>
     <% include ../base/static.ejs %>
-    <script src="/public/angular/appUser/app_user.js"></script>
     <style>
         .axis path,
         .axis line{
@@ -25,20 +24,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <div class="panel">
-                <div class="panel-body">
-                    <button type="button" class="btn btn-success btn-lg btn-block account-in">收入</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block account-out">支出</button>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading"><i class="fa fa-bar-chart"></i>&nbsp;账目趋势</div>
-                <div class="panel-body">
-                    <div class="check-trend">
-
-                    </div>
-                </div>
-            </div>
+            <div ui-view="add-btn"></div>
+            <div ui-view="trend"></div>
         </div>
 
         <div class="col-md-4">
@@ -46,19 +33,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="fa fa-list-alt"></i>&nbsp;账单列表</div>
                 <div class="panel-body">
-                    <ul class="list-group check-wrapper"  ng-controller="checkList">
-                        <li class="list-group-item" ng-repeat=" x in checks">{{ x.title  + '&nbsp;'
-                            + x.inorout + '&nbsp;' + x.money + '&nbsp;元'}}
-                        </li>
+                    <ul class="list-group check-wrapper">
                     </ul>
                 </div>
             </div>
-            <script>
-                //slider
-                $(function() {
-                    $('.check-wrapper');
-                });
-            </script>
             <!--账单列表-->
         </div>
     </div>
@@ -115,7 +93,7 @@
 
         });
     });
-   $('.account-in, .account-out').on('click', function() {
+   $('body').on('click', '.account-in, .account-out', function() {
        var _this = $(this);
         var current = (function() {
                     var s = {'title': '消费', 'type': '消费'};

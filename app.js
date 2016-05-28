@@ -7,6 +7,7 @@ var app = express();
 var path = require('path');
 var setting = require('./setting.js');
 var router = require('./router/router.js');
+var checkRouter = require('./router/check.js');
 var userRouter = require('./router/user_router.js');
 var bodyParser = require('body-parser');
 var session  = require('express-session');
@@ -48,6 +49,7 @@ app.use('/', function(req, res, next) {
 });
 app.use('/', router);
 app.use('/user', userRouter);
+app.use('/check', checkRouter);
 app.use('/setting', require('./router/user_setting.js'));
 var server = app.listen(3000, function() {
     var host = server.address().address;

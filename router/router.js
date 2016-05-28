@@ -77,7 +77,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-	User.getOneUser({username:req.body.username, passwd: req.body.passwd}, function(err, user) {
+	User.getOneUser({username: req.body.username, passwd: req.body.passwd}, function(err, user) {
 		if(err) {
 			res.json({
                 error: '0',
@@ -93,7 +93,7 @@ router.post('/login', function(req, res) {
             });
 		} else {
             req.session.user = {
-                id: user._id,
+                _id: user._id,
                 username: user.username,
                 email   : user.email
             };

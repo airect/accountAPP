@@ -53,12 +53,10 @@
             data: info,
             success: function(response) {
                 if (response.success) {
-                    location.href = '/user';
+                    location.href = '/#user';
                 } else {
                     alert(response.msg);
                 }
-
-                console.log(response);
             },
             error:function() {
                 console.log('failed');

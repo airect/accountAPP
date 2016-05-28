@@ -1,28 +1,40 @@
 /**
- * Created by Administrator on 2016/1/29.
+ * 账单列表
+ * @author airect
  */
 var mongo = require('./db');
-
-function Check() {
-
+var ObjectId = require('mongodb').ObjectID;
+function Check(userId) {
+    if (!userId) return false;
+    this.userId = userId;
 }
+
 module.exports = Check;
+
 /**
- * 获取账单列表
- * @param {Object} check
+ * 获取一个用户的账单列表
+ * @param {Object} condition 账单条件
  */
-Check.getCheck = function(check, callback) {
+Check.prototype.getCheck = function(condition, callback) {
+    condition = condition || {};
+    var tmp_condition = {
+        '_id': ObjectId(this.userId),
+        'checks': condition
+    };
+    //return callback(null, tmp_condition);
     mongo.open(function(err, db) {
         if(err) return callback(err);
-        db.collection('check' ,function(err, collection) {
+        db.collection('user' ,function(err, collection) {
             if(err) return callback(err);
-            collection.find(check).toArray(function(err, items) {
-                if(err) return callback(err);
+            //return callback(null, tmp_condition);
+            collection.find(tmp_condition).toArray(function(err, items) {
+                if (err) return callback(err);
                 return callback(null, items);
             });
         });
     });
-}
+};
+
 /**
  * 获取一条账目
  * @param check
@@ -103,4 +115,4 @@ Check.isComplete = function(check, callback) {
         }
     }
     return callback(null, true);
-}
+};

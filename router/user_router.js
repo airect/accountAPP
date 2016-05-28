@@ -1,5 +1,5 @@
 /**
- * Created by Administrator on 2016/3/10.
+ * 用户Controller
  */
 var express = require('express');
 var router = express.Router();
@@ -28,14 +28,16 @@ router.get('/', function(req, res) {
     });
 });
 
-//用户设置
+/*
+ * 用户设置
+ */
 router.get('/setting', function(req, res) {
     res.render('user/setting', {
         title: '用户设置'
     });
 });
 
-//个人信息修改页面
+// 个人信息修改页面
 router.get('/', function() {
     //读取个人信息
     var info = new User({});

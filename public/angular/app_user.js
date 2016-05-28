@@ -16,10 +16,10 @@ angular.module('account.user', [
             })
             /* 用户中心 */
             .state('user.index', {
-                url: '',
+                url: '/',
                 views: {
                     'add-btn': {
-                        templateUrl: 'public/angular/tpl/user/index/add_btn.html',
+                        templateUrl: 'public/angular/tpl/user/index/add_btn.html'
                     },
                     'trend': {
                         templateUrl: 'public/angular/tpl/user/index/trend.html'

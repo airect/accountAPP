@@ -1,5 +1,6 @@
 /**
- * Created by Administrator on 2016/1/28.
+ * 用户模型
+ *
  */
 var mongo = require('./db');
 
@@ -30,7 +31,7 @@ User.getOneUser = function(user, callback) {
             });
         });
     });
-}
+};
 
 /**
  * 添加一个用户
@@ -61,7 +62,7 @@ User.prototype.addOneUser = function(callback) {
             });
         })
     });
-}
+};
 
 /**
  * 修改一个用户
@@ -84,5 +85,6 @@ User.delUser = function(user, callback) {
             });
         });
     });
-}
+};
+
 module.exports = User;

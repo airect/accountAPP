@@ -4,6 +4,7 @@
 angular.module('account', [
     'ui.router'
     ,'account.user'
+    ,'account.userCtrl'
 
 ]).run(function() {
 

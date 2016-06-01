@@ -3,9 +3,10 @@
  */
 var express = require('express');
 var router = express.Router();
-var User = require('../model/user.js'),
-    Check = require('../model/check.js');
+var User = require('../models/user.js'),
+    Check = require('../models/check.js');
 var userInfo;
+
 /*
  * filter
  */

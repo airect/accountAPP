@@ -4,9 +4,9 @@
 var express = require('express');
 var router  = express.Router();
 var fs      = require('fs');
-var Check   = require('../model/check.js');
-var User    = require('../model/user.js');
-var crypto = require('crypto');
+var Check   = require('../models/check.js');
+var User    = require('../models/user.js');
+var crypto  = require('crypto');
 var md5     = crypto.createHash('md5');
 //var flash   = require('connect-flash');
 
@@ -15,7 +15,10 @@ var md5     = crypto.createHash('md5');
 //router.get(function(req, res) {
 
 //});
-//首页
+
+/**
+ * 首页
+ */
 router.get('/', function(req, res) {
 	res.render('home/index' , {
 		title: '记账app',

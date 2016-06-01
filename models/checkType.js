@@ -4,7 +4,6 @@
  */
 var mongo = require('./db.js');
 var ObjectId = require('mongodb').ObjectID;
-var User = require('./user.js');
 var CheckType = function (_id) {
     this.userId = ObjectId(_id);
     console.log(typeof this.userId, this.userId);
@@ -38,11 +37,12 @@ CheckType.prototype = {
     * 获取所有账单类型
     */
     getTypeInfo: function (callback) {
+        var $this = this;
         mongo.open(function (err, db) {
             if (err) return callback(err);
             db.collection('user', function(err, user) {
                 if (err) return callback(err);
-                user.find({_id: this.userId}, {'check_types': 1}).toArray(function (err, items) {
+                user.find({_id: $this.userId}, {'check_types': 1}).toArray(function (err, items) {
                     if (err) return callback(err);
                     return callback(null, items);
                 });

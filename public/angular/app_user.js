@@ -16,7 +16,7 @@ angular.module('account.user', [
             })
             /* 用户中心 */
             .state('user.index', {
-                url: '/',
+                //url: '/',
                 views: {
                     'add-btn': {
                         templateUrl: 'public/angular/tpl/user/index/add_btn.html'
@@ -32,7 +32,21 @@ angular.module('account.user', [
             /* 用户设置 */
             .state('user.setting', {
                 url: '/setting',
-                templateUrl: 'public/angular/tpl/user/setting.html'
+                templateUrl: 'public/angular/tpl/user/setting.html',
+                resolve: {
+                    check_types: function (checkTypes) {
+                        var s = checkTypes.getAll();
+                        console.log('resolve finished');
+                        return s;
+                    },
+                    profile: function (profile) {
+                        return profile.getAll();
+                    }
+
+                    //['checkTypes', function (checkTypes) {
+                    //return checkTypes.getAll();
+                    //}]
+                }
             })
             .state('user.setting.profile', {
                 url: '',
@@ -42,9 +56,11 @@ angular.module('account.user', [
                 url: '/avatar',
                 templateUrl: 'public/angular/tpl/user/setting/avatar.html'
             })
-            .state('user.setting.addtype', {
-                url: '/addtype',
-                templateUrl: 'public/angular/tpl/user/setting/addtype.html'
+            .state('user.setting.check_type', {
+                url: '/check_type',
+                templateUrl: 'public/angular/tpl/user/setting/check_type.html',
+                controller: 'getCheckTypes',
+
             });
 }]);
 

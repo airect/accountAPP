@@ -72,15 +72,19 @@ router.post('/addcheck', function(req, res) {
 
 });
 
-//登陆
+/**
+ * 登录view
+ */
 router.get('/login', function(req, res) {
     res.render('home/login', {
         title: '登录'
     });
 });
-
+/**
+ * 登录handler
+ */
 router.post('/login', function(req, res) {
-	User.getOneUser({username: req.body.username, passwd: req.body.passwd}, function(err, user) {
+	User.getOneUser({username: req.body.username, passwd: req.body.passwd}, {}, function(err, user) {
 		if(err) {
 			res.json({
                 error: '0',

@@ -107,7 +107,7 @@ router.get('/avatar', function (req, res) {
  */
 router.post('/add_avatar', function (req, res) {
     var userModel = new User({"_id": req.session.user._id});
-    
+
     // TODO 文件上传需要共用
     if (!req.query.avatar) return res.json({
         err: 0,

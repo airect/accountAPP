@@ -20,4 +20,4 @@ D3.js Bootstrap
 
 #数据库设计
 ##
-![](http://cdn.sunxiaojiao.net/nosql_check.png)
+![](http://cdn.sunxiaojiao.net/nosql_check1.png)

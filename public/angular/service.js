@@ -25,17 +25,15 @@ service.factory('checks', ['$http', function($http) {
 /**
  * 账单类型列表
  */
-service.factory('checkTypes', ['$http', function ($http) {
+service.factory('checkTypesService', ['$http', function ($http) {
 
     var path = '/setting/get_check_type';
     var promise = $http.get(path).then(function (resp) {
-        console.log(resp.data.datas);
         return resp.data.datas;
     });
-    //console.log(primose);
+
     return {
         getAll: function () {
-            console.log(promise);
             return promise;
         }
     };
@@ -44,10 +42,12 @@ service.factory('checkTypes', ['$http', function ($http) {
 /**
  * 用户信息
  */
-service.factory('profile', ['$http', function ($http) {
+service.factory('profileService', ['$http', function ($http) {
     var path = '/setting/profile';
     var promise = $http.get(path).then(function (resp) {
         return resp.data;
+    }, function () {
+        return 'service error';
     });
     return {
       'getAll': function () {

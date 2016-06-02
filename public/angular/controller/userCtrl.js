@@ -36,11 +36,15 @@ app.controller('addCheckType', ['$scope', '$http',
 /**
  * 获取账单类型
  */
-app.controller('getCheckTypes', ['$scope', 'checkTypes', function ($scope, checkTypes) {
-    //$scope.check_types = checkTypes.getAll();
-    //console.log($scope);
+app.controller('getCheckTypes', ['$scope', 'checkTypesService', 'check_types', function ($scope, check_types) {
+    //console.log(checkTypesService.getAll());
+    $scope.check_types = check_types;
+    console.log($scope.check_types);
 }]);
 
 /**
  * 用户信息
  */
+app.controller('UserProfile', function ($scope, profile) {
+    console.log(profile);
+});

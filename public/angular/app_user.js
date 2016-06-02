@@ -34,11 +34,6 @@ angular.module('account.user', [
                 url: '/setting',
                 templateUrl: 'public/angular/tpl/user/setting.html',
                 resolve: {
-                    check_types: function (checkTypes) {
-                        var s = checkTypes.getAll();
-                        console.log('resolve finished');
-                        return s;
-                    },
                     profile: function (profile) {
                         return profile.getAll();
                     }
@@ -50,7 +45,12 @@ angular.module('account.user', [
             })
             .state('user.setting.profile', {
                 url: '',
-                templateUrl: 'public/angular/tpl/user/setting/profile.html'
+                templateUrl: 'public/angular/tpl/user/setting/profile.html',
+                resolve: {
+                    profile: function (profileService) {
+                        return profileService.getAll();
+                    }
+                }
             })
             .state('user.setting.avatar', {
                 url: '/avatar',
@@ -60,7 +60,14 @@ angular.module('account.user', [
                 url: '/check_type',
                 templateUrl: 'public/angular/tpl/user/setting/check_type.html',
                 controller: 'getCheckTypes',
-
+                resolve: {
+                    check_types: function (checkTypesService) {
+                        var s = checkTypesService.getAll();
+                        console.log('resolve finished');
+                        console.log(s);
+                        return s;
+                    },
+                }
             });
 }]);
 

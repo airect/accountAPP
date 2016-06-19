@@ -45,6 +45,6 @@ app.controller('getCheckTypes', ['$scope', 'checkTypesService', 'check_types', f
 /**
  * 用户信息
  */
-app.controller('UserProfile', function ($scope, profile) {
-    console.log(profile);
-});
+//app.controller('UserProfile',['profile', function ($scope, profile) {
+//    //console.log(profile);
+//}]);

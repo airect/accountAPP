@@ -32,20 +32,34 @@ angular.module('account.user', [
             /* 用户设置 */
             .state('user.setting', {
                 url: '/setting',
-                templateUrl: 'public/angular/tpl/user/setting.html',
-                resolve: {
-                    profile: function (profile) {
-                        return profile.getAll();
-                    }
-
-                    //['checkTypes', function (checkTypes) {
-                    //return checkTypes.getAll();
-                    //}]
-                }
+                templateUrl: 'public/angular/tpl/user/setting.html'
             })
             .state('user.setting.profile', {
                 url: '',
                 templateUrl: 'public/angular/tpl/user/setting/profile.html',
+                controller: function (profile, $scope, $http) {
+
+                    $scope.username = profile.username;
+                    $scope.sex      = profile.sex;
+                    $scope.email    = profile.email;
+
+                    $scope.updateProfile = function () {
+                        $http.post('/setting/update_profile', {
+                            username: $scope.username,
+                            sex: $scope.sex,
+                            email: $scope.email
+                        })
+                            .then(function (resp) {
+                            if (resp.data.status == 200 ) {
+
+                            } else {
+
+                            }
+                        }, function () {
+
+                        });
+                    }
+                },
                 resolve: {
                     profile: function (profileService) {
                         return profileService.getAll();

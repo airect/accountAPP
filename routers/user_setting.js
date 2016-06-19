@@ -22,7 +22,7 @@ router.use(function (req, res, next) {
 });
 
 /**
- * 我的信息
+ * 我的资料
  *
  */
 router.get('/profile', function (req, res) {
@@ -33,6 +33,25 @@ router.get('/profile', function (req, res) {
     });
 });
 
+/**
+ * 修改我的资料
+ */
+router.post('/update_profile', function (req, res) {
+    var user = req.session.user;
+    var UserModel = new User(user);
+    UserModel.updateOneUser(req.body, function (err, result) {
+        if (err) return res.json({
+            err: 1,
+            msg: err
+        });
+
+        res.json({
+            status: 200,
+            data: result,
+            msg: 'ok'
+        });
+    });
+});
 /**
  * 列出用户的所有账单
  */

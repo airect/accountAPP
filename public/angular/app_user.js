@@ -68,18 +68,25 @@ angular.module('account.user', [
             })
             .state('user.setting.avatar', {
                 url: '/avatar',
-                templateUrl: 'public/angular/tpl/user/setting/avatar.html'
+                templateUrl: 'public/angular/tpl/user/setting/avatar.html',
+                resolve: {
+                    avatar: function (profileService) {
+                        return profileService.getAll();
+                    }
+                },
+                controller: function ($scope, avatar) {
+                    $scope.avatar = avatar.avatar;
+                }
             })
             .state('user.setting.check_type', {
                 url: '/check_type',
                 templateUrl: 'public/angular/tpl/user/setting/check_type.html',
-                controller: 'getCheckTypes',
+                controller: function ($scope, check_types) {
+                    $scope.check_types = check_types;
+                },
                 resolve: {
                     check_types: function (checkTypesService) {
-                        var s = checkTypesService.getAll();
-                        console.log('resolve finished');
-                        console.log(s);
-                        return s;
+                        return checkTypesService.getAll();
                     },
                 }
             });

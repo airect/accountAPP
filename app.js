@@ -16,6 +16,7 @@ var MongoStore  = require('connect-mongo')(session);
 var cookieParse = require('cookie-parser');
 var connect     = require('connect');
 var _lang       =  require('./language/zh_cn.js');
+
 app.locals._lang = _lang;
 app.use(cookieParse());
 
@@ -43,9 +44,14 @@ app.set('view options', {
 
 // set static resource
 app.use('/public', express.static(__dirname + '/public'));
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // 让前端模板能获取到session变量
 app.use('/', function(req, res, next) {
+        if (req.session.isNeedUpdate) {
+            updateSession(req);
+        }
+
         res.locals.session = req.session;
     next();
 });
@@ -55,6 +61,7 @@ app.use('/', router);
 app.use('/user', userRouter);
 app.use('/check', checkRouter);
 app.use('/setting', require('./routers/user_setting.js'));
+
 var server = app.listen(3000, function() {
     var host = server.address().address;
     var port = server.address().port;
@@ -75,3 +82,15 @@ var server = app.listen(3000, function() {
 //    }
 //
 //});
+
+function updateSession (req) {
+    var session = req.session;
+    var User = require('./models/user.js');
+    User.getOneUser(session.user, '', function (err, user) {
+        if (err) return false;
+        console.log(user);
+        req.session.user = user;
+        req.session.isNeedUpdate = 0;
+        return true;
+    });
+}

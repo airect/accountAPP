@@ -1,1 +1,68 @@
-<img src="/public/image/avatar.jpg" width="100" class="center-block">
+<style>
+    .avatar {
+        position: relative;
+        width: 100px;
+        height: 100px;
+
+    }
+    .avatar .avatar-img, .avatar .avatar-mask {
+        width: inherit;
+        height: inherit;
+        position: absolute;
+    }
+    .avatar .avatar-mask {
+        z-index: 1;
+        background: #ccc;
+        opacity: 0;
+        transition: opacity .4s ease-in;
+        -moz-transition: opacity .4s ease-in;
+        -o-transition: opacity .4s ease-in;
+        -webkit-transition: opacity .4s ease-in;
+    }
+    .avatar-mask i.fa {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+    }
+    .avatar .avatar-mask:hover {
+        opacity: .8;
+    }
+    .avatar .avatar-img {
+    }
+</style>
+<div class="avatar">
+    <img src="{{ avatar }}" width="100" class="center-block avatar-img">
+    <div class="avatar-mask"><i class="fa fa-cog fa-2x" aria-hidden="true"></i></div>
+</div>
+<script>
+
+    $('body').on('click', '.avatar', function () {
+        if ($('.upload-img').length == 0) {
+            var fileForm = $('<form enctype="multipart/form-data" class="upload-img"><input type="file" name="avatar" class="upload-img-input" hidden></form>');
+            $('body').append(fileForm);
+        }
+
+        $('.upload-img-input').trigger('click');
+
+    });
+    $('body').on('change', '.upload-img-input', function () {
+        var formData = new FormData($('.upload-img')[0]);
+        //formData.append('img_file', $('.upload-img-input')[0].files);
+        $.ajax({
+            url: '/setting/add_avatar',
+            data: formData,
+            contentType : false,
+            type: 'post',
+            processData: false,
+            success: function (resp) {
+                if (resp.status == 200) {
+                    $('.avatar-img').attr('src', resp.datas);
+                } else {
+                    alert('修改头像失败');
+                }
+            }
+
+        });
+
+    });
+</script>

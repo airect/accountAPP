@@ -52,6 +52,11 @@ service.factory('profileService', ['$http', function ($http) {
     return {
       'getAll': function () {
           return promise;
+      },
+      'getAvatar': function () {
+          return promise.then(function () {
+              return promise.avatar;
+          });
       }
     };
 }]);

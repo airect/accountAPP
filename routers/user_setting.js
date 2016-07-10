@@ -7,6 +7,12 @@ var router = express.Router();
 var ObjectId = require('mongodb').ObjectID;
 var CheckType = require('../models/checkType.js');
 var User      = require('../models/user.js');
+var multer    = require('multer');
+
+var dest      = 'uploads/';
+var upload    = multer({'dest': dest});
+
+var fs        = require('fs');
 
 module.exports = router;
 
@@ -124,15 +130,23 @@ router.get('/avatar', function (req, res) {
 /**
  * 上传头像handler
  */
-router.post('/add_avatar', function (req, res) {
+router.post('/add_avatar', upload.single('avatar'), function (req, res) {
     var userModel = new User({"_id": req.session.user._id});
+    console.log(req.file);
 
     // TODO 文件上传需要共用
-    if (!req.query.avatar) return res.json({
+    if (!req.file) return res.json({
         err: 0,
         msg: '参数错误'
     });
-    userModel.avatar = req.query.avatar;
+
+    /* 更该文件名称 这里也可以用lastIndexOf 取最后一个.的位置 */
+    var matches = req.file.originalname.match(/(.+)\.((?!\.)+.+)$/);
+    var suffix = matches[2];  // 后缀
+    var newFileName = dest + req.file.filename + '.' + suffix;
+    fs.renameSync(dest + req.file.filename, newFileName);
+
+    userModel.avatar = '/' + newFileName;
 
     userModel.setAvatar(function (err, result) {
         if (err)
@@ -141,10 +155,11 @@ router.post('/add_avatar', function (req, res) {
                 msg: '上传失败'
             });
 
+        req.session.isNeedUpdate = 1;
         return res.json({
             status: 200,
             msg: '上传成功',
-            datas: result
+            datas: userModel.avatar
 
         });
     });
